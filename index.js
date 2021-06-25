@@ -68,17 +68,17 @@ app.get('/review', (req, res) => {
 })
 
 
-// app.get("/books", (req, res) => {
+//Show Order on Ui
 
-//   bookCollections.find()
-//   .toArray((err, books) => {
-    
-//     res.send(books)
-//     console.log(books)
-//   })
+app.get('/orders', (req, res) =>{
 
+  orders.find({email: req.query.email})
+  .toArray((err,documents) => {
+    // console.log(err,documents)
+    res.send(documents)
+  })
+})
 
-// })
 
 
 
@@ -133,17 +133,6 @@ app.post('/addOrder', (req,res) =>{
 })
 
 
-//Show Order on Ui
-
-app.get('/orders', (req, res) =>{
-  console.log(req.query.email)
-
-  orders.find({email: req.query.email})
-  .toArray((err,documents) => {
-    console.log(err,documents)
-    res.send(documents)
-  })
-})
 
 
 
