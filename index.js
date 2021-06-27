@@ -28,7 +28,7 @@ client.connect(err => {
     console.log( "my err message", err)
   const serviceCollection = client.db("cleaner").collection("service");
   const reviewCollection = client.db("cleaner").collection("review");
-  const orders = client.db("cleaner").collection("orders");
+  const orderCollection = client.db("cleaner").collection("orders");
   // perform actions on the collection object
   // console.log("connected successfully")
 
@@ -67,12 +67,26 @@ app.get('/review', (req, res) => {
 
 })
 
+// // Show all Order on Ui
 
-//Show Order on Ui
+app.get('/allOrders', (req, res) =>{
+
+  orderCollection.find({})
+  .toArray((err,documents) => {
+    // console.log(err,documents)
+    res.send(documents)
+  })
+})
+
+
+   
+
+
+//Show single person Order on Ui
 
 app.get('/orders', (req, res) =>{
 
-  orders.find({email: req.query.email})
+  orderCollection.find({email: req.query.email})
   .toArray((err,documents) => {
     // console.log(err,documents)
     res.send(documents)
@@ -123,7 +137,7 @@ app.post('/addOrder', (req,res) =>{
 
   const order =req.body;
 
-  orders.insertOne(order)
+  orderCollection.insertOne(order)
   .then(result => {
 
     res.send(result.insertedCount > 0)
